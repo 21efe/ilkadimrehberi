@@ -9,6 +9,13 @@ function whatsappLink(message: string) {
   return `${whatsappBase}?text=${encodeURIComponent(message)}`;
 }
 
+// Ödeme sayfası URL'i — kendi ödeme sisteminizle değiştirin
+const PAYMENT_BASE_URL = "https://odeme.ilkadimrehberi.com"; // örnek URL
+
+function paymentLink(packageName: string) {
+  return `${PAYMENT_BASE_URL}?paket=${encodeURIComponent(packageName)}`;
+}
+
 function WhatsAppIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -18,38 +25,190 @@ function WhatsAppIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+function CreditCardIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+      <line x1="1" y1="10" x2="23" y2="10" />
+    </svg>
+  );
+}
+
 const defaultMessage = "Merhaba Veysel Bey, bebek ürünü almadan önce danışmak istiyorum.";
 
+// Ürünler — gerçekçi SVG ikonlarıyla
 const products = [
-  ["🍼", "Bebek Arabası"],
-  ["🚶", "Travel Sistem Bebek Arabası"],
-  ["🛏️", "Park Beşik"],
-  ["🚗", "Oto Koltuğu"],
-  ["🔋", "Akülü Araba"],
-  ["🤱", "Otomatik Ana Kucağı"],
-  ["🌙", "Otomatik Anne Beşiği"],
-  ["🪑", "Mama Sandalyesi"],
-  ["👶", "Kanguru"],
-  ["🚼", "Yürüteç"],
-  ["📷", "Bebek Telsizi / Kamera"],
-  ["✨", "Diğer Bebek Araç Gereçleri"],
+  {
+    name: "Bebek Arabası",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M8 20h24l-4 12H12L8 20z" fill="#9B7EC8" opacity=".18"/>
+        <path d="M8 20h24l-4 12H12L8 20z" stroke="#7A5FAA" strokeWidth="1.8" strokeLinejoin="round"/>
+        <path d="M32 20l4-10h4" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M8 20H5" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <circle cx="14" cy="34" r="3" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <circle cx="26" cy="34" r="3" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <path d="M5 20v-6" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Travel Sistem Bebek Arabası",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M6 22h26l-3 10H9L6 22z" fill="#9B7EC8" opacity=".18"/>
+        <path d="M6 22h26l-3 10H9L6 22z" stroke="#7A5FAA" strokeWidth="1.8" strokeLinejoin="round"/>
+        <rect x="16" y="10" width="12" height="10" rx="4" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <path d="M32 22l4-8" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M6 22H3" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <circle cx="11" cy="34" r="3" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <circle cx="25" cy="34" r="3" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Park Beşik",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="8" y="14" width="32" height="20" rx="3" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <path d="M8 22h32" stroke="#7A5FAA" strokeWidth="1.5" strokeDasharray="3 3"/>
+        <path d="M16 34v6M32 34v6" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M12 14v-4M36 14v-4" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <ellipse cx="24" cy="25" rx="6" ry="3" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.2"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Oto Koltuğu",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="12" y="8" width="24" height="28" rx="6" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <rect x="16" y="12" width="16" height="14" rx="4" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <path d="M18 36h12" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M15 22h-4v8h4" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M33 22h4v8h-4" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="24" cy="19" r="3" fill="#C4A8E8" stroke="#7A5FAA" strokeWidth="1.2"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Akülü Araba",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="6" y="18" width="36" height="16" rx="5" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <rect x="14" y="12" width="20" height="8" rx="3" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <circle cx="13" cy="36" r="4" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <circle cx="35" cy="36" r="4" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <path d="M22 15l2-4 2 4" stroke="#7A5FAA" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M6 24h4M38 24h4" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Otomatik Ana Kucağı",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <ellipse cx="24" cy="28" rx="14" ry="10" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <ellipse cx="24" cy="25" rx="8" ry="6" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <path d="M24 18v-6" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M10 28v6h28v-6" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="24" cy="23" r="3" fill="#C4A8E8"/>
+        <path d="M20 12h8" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Otomatik Anne Beşiği",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M10 30 Q24 16 38 30" stroke="#7A5FAA" strokeWidth="1.8" fill="#9B7EC8" fillOpacity=".18"/>
+        <path d="M10 30 Q24 44 38 30" stroke="#7A5FAA" strokeWidth="1.8" fill="#EDE4F8"/>
+        <path d="M24 16v-6" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M16 38v4M32 38v4" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+        <circle cx="24" cy="30" r="4" fill="#C4A8E8" stroke="#7A5FAA" strokeWidth="1.2"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Mama Sandalyesi",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="14" y="8" width="20" height="12" rx="3" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <rect x="12" y="18" width="24" height="4" rx="2" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <path d="M16 22v16M32 22v16" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M16 30h16" stroke="#7A5FAA" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M12 38h8M28 38h8" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Kanguru",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M24 10c-5 0-9 3-9 8v10c0 2 2 4 4 4h10c2 0 4-2 4-4V18c0-5-4-8-9-8z" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <circle cx="24" cy="20" r="4" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.4"/>
+        <path d="M12 14 Q10 20 12 26" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+        <path d="M36 14 Q38 20 36 26" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+        <path d="M16 32v8M32 32v8" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M10 8h4M34 8h4" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Yürüteç",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M10 14h28" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M14 14L10 38M34 14l4 24" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M10 26h28" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+        <rect x="16" y="16" width="16" height="10" rx="3" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <circle cx="12" cy="38" r="3" stroke="#7A5FAA" strokeWidth="1.6" fill="#9B7EC8" opacity=".4"/>
+        <circle cx="36" cy="38" r="3" stroke="#7A5FAA" strokeWidth="1.6" fill="#9B7EC8" opacity=".4"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Bebek Telsizi / Kamera",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="10" y="14" width="22" height="18" rx="4" fill="#9B7EC8" opacity=".18" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <circle cx="21" cy="23" r="5" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <circle cx="21" cy="23" r="2" fill="#C4A8E8"/>
+        <path d="M32 19l6-4v16l-6-4" stroke="#7A5FAA" strokeWidth="1.8" strokeLinejoin="round" fill="#EDE4F8"/>
+        <path d="M14 36v6M28 36v6" stroke="#7A5FAA" strokeWidth="1.6" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Diğer Bebek Araç Gereçleri",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <circle cx="24" cy="24" r="14" fill="#9B7EC8" opacity=".12" stroke="#7A5FAA" strokeWidth="1.8"/>
+        <path d="M24 14v4M24 30v4M14 24h4M30 24h4" stroke="#7A5FAA" strokeWidth="1.8" strokeLinecap="round"/>
+        <circle cx="24" cy="24" r="5" fill="#EDE4F8" stroke="#7A5FAA" strokeWidth="1.5"/>
+        <path d="M17.5 17.5l2.8 2.8M27.7 27.7l2.8 2.8M30.5 17.5l-2.8 2.8M20.3 27.7l-2.8 2.8" stroke="#7A5FAA" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
 ];
 
 const packages = [
   {
     name: "Basit Program",
-    desc: "Tek bir ürün hakkında hızlı ve net yorum almak isteyen aileler için.",
+    desc: "Tek bir ürün kategorisinde net rehberlik almak isteyen aileler için.",
     price: "299 ₺",
     featured: false,
     note: "",
-    cta: "Bu Ürünü Sor",
+    cta: "Hemen Satın Al",
     ctaStyle: "outline",
-    message: "Merhaba Veysel Bey, Basit Program almak istiyorum. 1 ürün için danışmanlık almak istiyorum.",
+    paymentSlug: "basit",
     features: [
-      "1 ürün değerlendirmesi",
-      "WhatsApp üzerinden danışmanlık",
-      "Ürünün artı/eksi yorumu",
-      "Bütçeye göre kısa değerlendirme",
+      "3-4 ürün değerlendirmesi",
+      "Sesli görüşme ile ürün analizi",
+      "Bütçeye göre yönlendirme",
+      "Ürünlerin artı / eksi değerlendirmesi",
+      "Alternatif ürün önerileri",
+      "WhatsApp üzerinden destek",
     ],
   },
   {
@@ -58,32 +217,39 @@ const packages = [
     price: "499 ₺",
     featured: true,
     note: "💡 1 yanlış alışverişten daha ucuz",
-    cta: "Karşılaştırma Al",
+    cta: "Hemen Satın Al",
     ctaStyle: "wa",
-    message: "Merhaba Veysel Bey, Orta Paket almak istiyorum. Birkaç ürün arasında kararsız kaldım.",
+    paymentSlug: "orta",
     features: [
-      "3 ürüne kadar karşılaştırma",
-      "Artı/eksi analizi",
-      "Kullanım ihtiyacına göre öneri",
-      "Alternatif ürün yorumu",
-      "WhatsApp üzerinden birebir destek",
+      "5+ ürün değerlendirmesi",
+      "Sesli görüşme ile detaylı analiz",
+      "Yeni doğan ihtiyaç listesi oluşturma",
+      "Gereksiz ürünleri eleme",
+      "Ürün artı / eksi değerlendirmesi",
+      "Bütçeye göre alışveriş planı",
+      "Alternatif ürün önerileri",
+      "WhatsApp üzerinden destek",
     ],
   },
   {
     name: "Premium Paket",
-    desc: "Bebek alışverişini toplu planlamak isteyen aileler için.",
+    desc: "Bebek alışverişini toplu, kapsamlı planlamak isteyen aileler için.",
     price: "699 ₺",
     featured: false,
     note: "",
-    cta: "Alışverişimi Planla",
+    cta: "Hemen Satın Al",
     ctaStyle: "outline",
-    message: "Merhaba Veysel Bey, Premium Paket almak istiyorum. Bebek alışverişimi kapsamlı planlamak istiyorum.",
+    paymentSlug: "premium",
     features: [
-      "5+ ürün değerlendirmesi",
-      "Kategori bazlı öneri",
-      "Bütçe planına göre yönlendirme",
-      "Temel ürünlerde kapsamlı destek",
-      "Öncelikli WhatsApp dönüşü",
+      "10+ ürün değerlendirmesi",
+      "Detaylı birebir sesli danışmanlık",
+      "Kategori kategori ürün planlaması",
+      "Yeni doğan alışveriş rehberi",
+      "Bütçeye göre önceliklendirme",
+      "Gerçek ihtiyaç analizi",
+      "Muadil ve alternatif ürün önerileri",
+      "Ürünlerin uzun kullanım değerlendirmesi",
+      "Öncelikli WhatsApp desteği",
     ],
   },
 ];
@@ -134,8 +300,8 @@ const faqs = [
   ["Hangi ürünleri sorabilirim?", "Bebek arabası, park beşik, oto koltuğu, ana kucağı, akülü araba, mama sandalyesi ve birçok bebek araç gereci hakkında danışabilirsiniz."],
   ["Ürünleri siz mi satıyorsunuz?", "Hayır. Bu hizmet ürün satışı değil, ürün seçimi konusunda danışmanlık hizmetidir."],
   ["Kesin olarak hangi ürünü almalıyım diyebilir misiniz?", "İhtiyacınıza ve bütçenize göre en mantıklı seçenekleri yorumlayabiliriz. Son satın alma kararı size aittir."],
-  ["Danışmanlık ücretli mi?", "Paketlere göre ücretlendirme yapılır. Güncel bilgi için WhatsApp'tan iletişime geçebilirsiniz."],
-  ["Ödeme nasıl yapılıyor?", "Paket seçimi sonrası ödeme bilgileri WhatsApp üzerinden paylaşılır. Ödeme tamamlandıktan sonra danışmanlık süreci başlar."],
+  ["Ödeme nasıl yapılıyor?", "Paket seçimi sonrası güvenli ödeme sayfasına yönlendirilirsiniz. Ödeme tamamlandıktan sonra WhatsApp üzerinden danışmanlık süreci başlar."],
+  ["Ödeme sonrası ne olur?", "Ödeme onaylandıktan sonra en geç 24 saat içinde WhatsApp üzerinden sizinle iletişime geçilir ve danışmanlık süreci başlar."],
   ["Marka öneriyor musunuz?", "Belirli bir markayı reklam veya anlaşma nedeniyle önermiyoruz. Ürünleri ihtiyacınıza, bütçenize ve kullanım durumunuza göre değerlendiriyoruz."],
   ["Komisyon alıyor musunuz?", "Hayır. Ürün satışından, mağazadan veya markadan komisyon almıyoruz."],
   ["En pahalı ürünü mü öneriyorsunuz?", "Hayır. Amacımız pahalı olanı değil, bütçenize ve kullanım ihtiyacınıza en uygun olanı değerlendirmektir."],
@@ -207,6 +373,8 @@ export default function Home() {
           --lavender-bg: #F3EEF9;
           --green-wa: #25D366;
           --green-wa-dark: #1DA851;
+          --payment-blue: #2563EB;
+          --payment-blue-dark: #1D4ED8;
           --text-dark: #2C1F0E;
           --text-mid: #6B5744;
           --text-soft: #9C8572;
@@ -293,9 +461,9 @@ export default function Home() {
         /* PRODUCTS */
         .products-section { background: var(--cream-dark); }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-        .product-card { background: var(--white); border-radius: var(--radius-sm); padding: 22px 16px; text-align: center; border: 1.5px solid var(--cream-border); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+        .product-card { background: var(--white); border-radius: var(--radius-sm); padding: 22px 16px; text-align: center; border: 1.5px solid var(--cream-border); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .product-card:hover { border-color: var(--lavender-light); transform: translateY(-3px); box-shadow: var(--shadow-soft); }
-        .product-emoji { font-size: 2rem; margin-bottom: 10px; }
+        .product-icon { display: flex; align-items: center; justify-content: center; }
         .product-card p { font-size: 0.84rem; font-weight: 700; color: var(--text-mid); }
 
         /* PACKAGES */
@@ -313,11 +481,15 @@ export default function Home() {
         .package-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 16px 0 28px; flex: 1; }
         .package-features li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.88rem; color: var(--text-mid); line-height: 1.5; }
         .check { color: var(--lavender-dark); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+        /* Ödeme butonu stilleri */
         .btn-package { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; border-radius: 50px; font-size: 0.92rem; font-weight: 800; text-decoration: none; transition: background 0.22s, transform 0.18s, box-shadow 0.22s, border-color 0.22s; }
-        .btn-package-wa { background: linear-gradient(135deg, var(--green-wa), #20C964); color: #fff; box-shadow: 0 0 0 5px rgba(37,211,102,0.10), 0 9px 24px rgba(37,211,102,0.28); }
-        .btn-package-wa:hover { background: linear-gradient(135deg, var(--green-wa-dark), #20C964); transform: translateY(-3px); box-shadow: 0 0 0 8px rgba(37,211,102,0.12), 0 16px 34px rgba(37,211,102,0.38); }
-        .btn-package-outline { background: transparent; color: var(--lavender-dark); border: 2px solid var(--lavender-light); }
-        .btn-package-outline:hover { background: var(--white); border-color: var(--lavender-dark); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(122,95,170,0.14); }
+        .btn-package-pay-featured { background: linear-gradient(135deg, #2563EB, #1D4ED8); color: #fff; box-shadow: 0 0 0 5px rgba(37,99,235,0.12), 0 9px 24px rgba(37,99,235,0.30); border: none; }
+        .btn-package-pay-featured:hover { background: linear-gradient(135deg, #1D4ED8, #1E40AF); transform: translateY(-3px); box-shadow: 0 0 0 9px rgba(37,99,235,0.14), 0 16px 36px rgba(37,99,235,0.38); }
+        .btn-package-pay-outline { background: transparent; color: var(--payment-blue); border: 2px solid #93C5FD; }
+        .btn-package-pay-outline:hover { background: #EFF6FF; border-color: var(--payment-blue); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(37,99,235,0.14); }
+        .payment-badge { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.75rem; color: var(--text-soft); margin-top: 10px; }
+        .payment-badge svg { opacity: 0.6; }
 
         /* ABOUT */
         .about-section { background: var(--cream); }
@@ -617,9 +789,9 @@ export default function Home() {
             </div>
             <div className="steps-grid">
               {[
-                ["1","Ürünü Gönder","Almak istediğiniz ürünün linkini, fotoğrafını veya model adını WhatsApp'tan gönderin."],
-                ["2","İhtiyacınızı Anlatın","Bebeğinizin yaşı, bütçeniz, kullanım alanınız ve beklentinizi paylaşın."],
-                ["3","Net Yorum Alın","Ürünün artılarını, eksilerini ve size uygun olup olmadığını sade şekilde öğrenin."],
+                ["1","Paketi Seçin & Ödeyin","İhtiyacınıza uygun paketi seçin, güvenli ödeme sayfasından ödemenizi tamamlayın."],
+                ["2","İhtiyacınızı Anlatın","Bebeğinizin yaşı, bütçeniz, kullanım alanınız ve almak istediğiniz ürünleri WhatsApp'tan paylaşın."],
+                ["3","Net Yorum Alın","Ürünlerin artılarını, eksilerini ve size uygun olup olmadığını sesli görüşme ve WhatsApp üzerinden öğrenin."],
               ].map(([num, title, text]) => (
                 <div className="step-card" key={num}>
                   <div className="step-num">{num}</div>
@@ -639,10 +811,10 @@ export default function Home() {
               <h2 className="section-title">Hangi Ürünlerde Danışmanlık Var?</h2>
             </div>
             <div className="products-grid">
-              {products.map(([emoji, name]) => (
-                <div className="product-card" key={name}>
-                  <div className="product-emoji">{emoji}</div>
-                  <p>{name}</p>
+              {products.map((product) => (
+                <div className="product-card" key={product.name}>
+                  <div className="product-icon">{product.icon}</div>
+                  <p>{product.name}</p>
                 </div>
               ))}
             </div>
@@ -675,10 +847,20 @@ export default function Home() {
                       <li key={feature}><span className="check">✓</span> {feature}</li>
                     ))}
                   </ul>
-                  <a href={whatsappLink(pkg.message)} target="_blank" rel="noreferrer" className={`btn-package btn-package-${pkg.ctaStyle}`}>
-                    <WhatsAppIcon size={15} />
+                  {/* Ödeme sayfasına yönlendiren buton */}
+                  <a
+                    href={paymentLink(pkg.paymentSlug)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`btn-package ${pkg.featured ? "btn-package-pay-featured" : "btn-package-pay-outline"}`}
+                  >
+                    <CreditCardIcon size={16} />
                     {pkg.cta}
                   </a>
+                  <div className="payment-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Güvenli ödeme · SSL şifreli
+                  </div>
                 </div>
               ))}
             </div>
@@ -692,15 +874,11 @@ export default function Home() {
               <div className="about-text">
                 <div className="section-label">Hakkımızda</div>
                 <h2 className="section-title">Biz Kimiz?</h2>
-                <p>
-                  Ben Veysel Dayanan. Yaklaşık 6 yıldır bebek sektöründe araç gereç satışıyla ilgileniyorum.
-                </p>
+                <p>Ben Veysel Dayanan. Yaklaşık 6 yıldır bebek sektöründe araç gereç satışıyla ilgileniyorum.</p>
                 <p>
                   Bu süreçte yüzlerce anne ve baba ile tanıştım. İlk bebeğini bekleyen heyecanlı ailelerden, ikinci çocuğu için daha bilinçli seçim yapmak isteyen ebeveynlere kadar birçok insanın aynı soruyla kararsız kaldığını gördüm:
                 </p>
-                <blockquote>
-                  &ldquo;Gerçekten doğru ürünü mü alıyoruz?&rdquo;
-                </blockquote>
+                <blockquote>&ldquo;Gerçekten doğru ürünü mü alıyoruz?&rdquo;</blockquote>
                 <p>
                   Birçok aile mağaza mağaza geziyor, saatlerce internetten yorum okuyor, videolar izliyor ama yine de karar veremiyordu. Çünkü herkes farklı bir şey söylüyordu. Kimi en pahalı ürünü öneriyor, kimi reklam yapıyor, kimi ise gerçekten kullanmadan yorum yapıyordu.
                 </p>
