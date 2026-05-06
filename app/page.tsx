@@ -570,8 +570,8 @@ export default function Home() {
           <div className="decision-card reveal">
             <div className="decision-content">
               <div className="decision-copy">
-                <h2>Yanlış ürün almak zorunda değilsiniz.</h2>
-                <p>Birçok aile yorumlar, reklamlar ve satıcı yönlendirmeleri arasında kararsız kalıyor. Doğru ürünü seçmek için ikinci bir profesyonel görüş alın.</p>
+                <h2>Satın almadan önce emin olun.</h2>
+                <p>Bir ürün pahalı, popüler ya da çok yorum almış olabilir; ama sizin bebeğiniz, bütçeniz ve kullanım alışkanlığınız için doğru seçenek olmayabilir. Ürünü almadan önce profesyonel bir gözle değerlendirelim, gereksiz masraf ve pişmanlık riskini azaltalım.</p>
               </div>
               <div className="decision-mini-grid">
                 {heroTrustPoints.map((point) => (
@@ -699,7 +699,7 @@ export default function Home() {
                   Bu süreçte yüzlerce anne ve baba ile tanıştım. İlk bebeğini bekleyen heyecanlı ailelerden, ikinci çocuğu için daha bilinçli seçim yapmak isteyen ebeveynlere kadar birçok insanın aynı soruyla kararsız kaldığını gördüm:
                 </p>
                 <blockquote>
-                  "Gerçekten doğru ürünü mü alıyoruz?"
+                  &ldquo;Gerçekten doğru ürünü mü alıyoruz?&rdquo;
                 </blockquote>
                 <p>
                   Birçok aile mağaza mağaza geziyor, saatlerce internetten yorum okuyor, videolar izliyor ama yine de karar veremiyordu. Çünkü herkes farklı bir şey söylüyordu. Kimi en pahalı ürünü öneriyor, kimi reklam yapıyor, kimi ise gerçekten kullanmadan yorum yapıyordu.
